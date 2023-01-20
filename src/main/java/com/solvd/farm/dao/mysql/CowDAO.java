@@ -15,6 +15,7 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
             "SELECT * FROM Cow WHERE idCow=?";
 
     public static final String SQL_DELETE_COW_ID = "DELETE FROM Cow WHERE idCow=?";
+    public static final String SQL_DELETE_COW_NAME = "DELETE FROM Cow WHERE name=?";
     public static final String SQL_INSERT_COW = "INSERT INTO Cow (age, name, weight, Farm_idFarm) VALUES (?, ?, ?, 1)";
     private static final Logger logger = LogManager.getLogger();
 
@@ -39,17 +40,25 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
     }
 
     @Override
-    public Cow createCow(int age, String name, double weight) {
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+    public Cow createCow(int a, String n, double w, MySQLConnectionPool connPool) {
+        Cow cow = null;
+        int MAX_ID = 0;
+        try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_COW)) {
-            statement.setInt(1, age);
-            statement.setString(2, name);
-            statement.setDouble(3, weight);
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow" );
+            ResultSet idRS = st.executeQuery();
+            if (idRS.next()) {
+                MAX_ID = idRS.getInt(1);
+            }
+            statement.setInt(1, a);
+            statement.setString(2, n);
+            statement.setDouble(3, w);
             statement.executeUpdate();
+            cow = new Cow(MAX_ID + 1, a, n, w, 1);
         } catch (SQLException e) {
             logger.info(e.getMessage());
         }
-        return null;
+        return cow;
     }
 
     @Override
@@ -80,6 +89,60 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
         }
 
         return allCowsByFarm;
+    }
+
+    public Cow cloneCow(String oldName, String newName, MySQLConnectionPool connPool) {
+        Cow cow = null;
+        int MAX_ID = 0;
+        String request = "SELECT * FROM Cow WHERE name = ?";
+        try (Connection connection = connPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(request)) {
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow" );
+            ResultSet idRS = st.executeQuery();
+            if (idRS.next()) {
+                MAX_ID = idRS.getInt(1);
+            }
+
+            statement.setString(1, oldName);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int age = rs.getInt(2);
+                double weight = rs.getDouble(4);
+                int idBelongsFarm = rs.getInt(5);
+                cow = new Cow(MAX_ID + 1, age, newName, weight, idBelongsFarm);
+                createCow(age, newName, weight, connPool);
+            } else {
+                logger.info("Корова с указанной кличкой отсутсвует на ферме.");
+            }
+        } catch (SQLException e) {
+            logger.info(e.getMessage());
+        }
+        return cow;
+    }
+
+    public boolean updateCow(MySQLConnectionPool connPool, String name, String newName, double weight, int age) {
+        String request = "SELECT * FROM Cow WHERE name = ?";
+        try (Connection connection = connPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(request)) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+
+                String upd = "UPDATE Cow SET name = ?, weight = ?, age = ? WHERE idCow = ?";
+                PreparedStatement st2 = connection.prepareStatement(upd);
+                st2.setString(1, newName);
+                st2.setDouble(2, weight);
+                st2.setInt(3, age);
+                st2.setInt(4, id);
+                st2.executeUpdate();
+            } else {
+                throw new RuntimeException("Корова с указанной кличкой отсутствует на ферме.");
+            }
+        } catch (SQLException e) {
+            logger.info(e.getMessage());
+        }
+        return true;
     }
 
     @Override
@@ -118,6 +181,17 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
         } catch (SQLException e) {
             logger.info(e.getMessage());
         }
+    }
+
+    public boolean removeCow(String name) {
+        try (Connection connection = (Connection) MySqlDAO.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_COW_NAME)) {
+            statement.setString(1, name);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.info(e.getMessage());
+        }
+        return true;
     }
 
     @Override

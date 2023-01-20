@@ -4,11 +4,14 @@ import com.solvd.farm.dao.mysql.MySQLConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -16,8 +19,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) throws SQLException {
-        MySQLConnectionPool connPool = new MySQLConnectionPool("jdbc:mysql://52.59.193.212:3306/Farm",
-                "root", "devintern", 10);
+        MySQLConnectionPool connPool = new MySQLConnectionPool(10);
         Scanner in = new Scanner(System.in);
         int chooseAction = 0;
         FarmDAO farmDAO = new FarmDAO();
@@ -33,19 +35,16 @@ public class Main {
             chooseAction = Integer.parseInt(in.nextLine());
             switch (chooseAction) {
                 case 1 -> farmDAO.getAllInformation(1, connPool);
+                case 2 -> farmDAO.createAnimal(in, connPool);
+                case 3 -> farmDAO.cloneAnimal(in, connPool);
+                case 4 -> farmDAO.updateAnimal(in, connPool);
+                case 5 -> farmDAO.removeAnimal(in, connPool);
+                case 6 -> {
+                    logger.info("Bye - bye..");
+                    chooseAction = 7;
+                }
                 default -> logger.info("Такого варианта нет.");
             }
         }
-
-
-
-
-
-//        CowDAO DAO_Cow = new CowDAO();
-//        logger.info(DAO_Cow.getAllCows());
-//        logger.info(DAO_Cow.getCowById(3));
-//        DAO_Cow.removeCow(3);
-//        logger.info(DAO_Cow.getAllCows());
-
     }
 }

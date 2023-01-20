@@ -1,17 +1,20 @@
 package com.solvd.farm.dao.mysql;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Stack;
 
 public class MySQLConnectionPool {
-    private String databaseUrl;
-    private String userName;
-    private String password;
+    private static String databaseUrl;
+    private static String userName;
+    private static String password;
     private int maxPoolSize = 10;
     private int connNum = 0;
 
@@ -20,11 +23,20 @@ public class MySQLConnectionPool {
     Stack<Connection> freePool = new Stack<>();
     Set<Connection> occupiedPool = new HashSet<>();
 
-    public MySQLConnectionPool(String databaseUrl, String userName,
-                               String password, int maxSize) {
-        this.databaseUrl = databaseUrl;
-        this.userName = userName;
-        this.password = password;
+    static {
+        try (InputStream input = MySQLConnectionPool.class.getClassLoader().getResourceAsStream("db.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+
+            databaseUrl = prop.getProperty("db.url") + prop.getProperty("db.name");
+            userName = prop.getProperty("db.user");
+            password = prop.getProperty("db.password");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public MySQLConnectionPool(int maxSize) {
         this.maxPoolSize = maxSize;
     }
 

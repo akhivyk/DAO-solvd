@@ -1,16 +1,28 @@
 package com.solvd.farm.dao.mysql;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class MySqlDAO {
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://52.59.193.212:3306/";
-        String user = "root";
-        String pass = "devintern";
-        String dbName = "Farm";
+        try (InputStream input = MySqlDAO.class.getClassLoader().getResourceAsStream("db.properties")) {
 
-        return DriverManager.getConnection(url + dbName, user, pass);
+            Properties prop = new Properties();
+
+            prop.load(input);
+
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String pass = prop.getProperty("db.password");
+            String dbName = prop.getProperty("db.name");
+
+            return DriverManager.getConnection(url + dbName, user, pass);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

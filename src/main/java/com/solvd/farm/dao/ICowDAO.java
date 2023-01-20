@@ -9,7 +9,7 @@ import java.util.List;
 public interface ICowDAO extends IBaseDAO<Cow> {
     List<Cow> getAllCows();
 
-    Cow createCow(int age, String name, double weight);
+    Cow createCow(int age, String name, double weight, MySQLConnectionPool connPool);
 
     List<Cow> getAllFarmCows(int idFarm, MySQLConnectionPool connPool) throws SQLException;
 
