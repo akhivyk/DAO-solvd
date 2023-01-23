@@ -23,7 +23,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int chooseAction = 0;
         FarmDAO farmDAO = new FarmDAO();
-        while (chooseAction != 7) {
+        while (chooseAction != 7) { 
             logger.info("""
                     Выберите действие:
                     1 - Вывод всей информации о ферме

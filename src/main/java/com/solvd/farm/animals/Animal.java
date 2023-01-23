@@ -1,8 +1,15 @@
 package com.solvd.farm.animals;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "animal")
 public abstract class Animal {
+    @XmlAttribute
     private int age;
+    @XmlAttribute
     private String name;
+    @XmlAttribute
     private double weight;
 
     public Animal() {
