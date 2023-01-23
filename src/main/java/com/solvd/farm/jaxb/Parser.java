@@ -24,7 +24,7 @@ public class Parser {
         List<Computer> computers = new ArrayList<>();
         computers.add(comp1);
         computers.add(comp2);
-        User u = new User(1, "Arnold", "WWW", 23, new Date(22-11-2022), car, computers);
+        User u = new User(1, "Arnold", "WWW", 23, new Date(), car, computers);
         JAXBContext c = JAXBContext.newInstance(User.class);
         Marshaller m = c.createMarshaller();
         Unmarshaller um = c.createUnmarshaller();
