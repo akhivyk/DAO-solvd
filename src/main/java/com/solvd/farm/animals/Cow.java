@@ -1,12 +1,7 @@
 package com.solvd.farm.animals;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-@XmlRootElement(name = "Cow")
 public class Cow extends Animal {
-    @XmlAttribute
     private long idCow;
-    @XmlAttribute
     private int idBelongsFarm;
 
     public Cow() {

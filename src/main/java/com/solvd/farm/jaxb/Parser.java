@@ -1,6 +1,9 @@
 package com.solvd.farm.jaxb;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -13,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Parser {
+    private static final Logger logger = LogManager.getLogger();
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
         Car car = new Car("Opel", 220, 7);
         Computer comp1 = new Computer("Lenovo", 8, 16.5);
@@ -25,12 +29,12 @@ public class Parser {
         Marshaller m = c.createMarshaller();
         Unmarshaller um = c.createUnmarshaller();
         m.marshal(u, new File("user.xml"));
-        System.out.println(u);
-        System.out.println("\n/////////////////////////\n");
+        logger.info(u);
+        logger.info("\n/////////////////////////\n");
         User u1 = new User();
-        System.out.println(u1);
-        System.out.println("\n//////////////////////\n");
+        logger.info(u1);
+        logger.info("\n//////////////////////\n");
         u1 = (User) um.unmarshal(new FileReader("user.xml"));
-        System.out.println(u1);
+        logger.info(u1);
     }
 }
