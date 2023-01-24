@@ -25,15 +25,17 @@ public class Parser {
         computers.add(comp1);
         computers.add(comp2);
         User u = new User(1, "Arnold", "WWW", 23, new Date(), car, computers);
+
         JAXBContext c = JAXBContext.newInstance(User.class);
         Marshaller m = c.createMarshaller();
         Unmarshaller um = c.createUnmarshaller();
         m.marshal(u, new File("user.xml"));
+
         logger.info(u);
-        logger.info("\n/////////////////////////\n");
+        logger.info("/////////////////////////\n");
         User u1 = new User();
         logger.info(u1);
-        logger.info("\n//////////////////////\n");
+        logger.info("//////////////////////\n");
         u1 = (User) um.unmarshal(new FileReader("user.xml"));
         logger.info(u1);
     }

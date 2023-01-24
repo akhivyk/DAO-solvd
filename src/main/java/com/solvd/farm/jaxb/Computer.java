@@ -1,18 +1,15 @@
 package com.solvd.farm.jaxb;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "computer")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Computer {
     @XmlAttribute
     private String model;
-    @XmlAttribute
+    @XmlElement
     private int RAM;
-    @XmlAttribute
+    @XmlElement
     private double screenSize;
 
     public Computer() {

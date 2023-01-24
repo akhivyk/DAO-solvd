@@ -1,18 +1,15 @@
 package com.solvd.farm.jaxb;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "car")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
     @XmlAttribute
     private String carBrand;
-    @XmlAttribute
+    @XmlElement
     private int maxSpeed;
-    @XmlAttribute
+    @XmlElement
     private int countPlace;
 
     public Car() {

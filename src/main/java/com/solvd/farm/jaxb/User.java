@@ -13,7 +13,7 @@ public class User {
     private String fname;
     @XmlAttribute
     private String lname;
-    @XmlAttribute
+    @XmlElement
     private int age;
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date dof;
