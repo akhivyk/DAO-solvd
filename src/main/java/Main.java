@@ -1,19 +1,10 @@
-import com.solvd.farm.dao.mysql.CowDAO;
 import com.solvd.farm.dao.mysql.FarmDAO;
 import com.solvd.farm.dao.mysql.MySQLConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.SQLException;
-import java.util.Comparator;
-import java.util.Properties;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger();
@@ -23,7 +14,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int chooseAction = 0;
         FarmDAO farmDAO = new FarmDAO();
-        while (chooseAction != 7) { 
+        while (chooseAction != 7) {
             logger.info("""
                     Выберите действие:
                     1 - Вывод всей информации о ферме

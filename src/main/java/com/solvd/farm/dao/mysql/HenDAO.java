@@ -85,7 +85,7 @@ public class HenDAO extends MySqlDAO implements IHenDAO {
         int MAX_ID = 0;
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HEN)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHen) FROM Hen" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHen) FROM Hen");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);
@@ -107,7 +107,7 @@ public class HenDAO extends MySqlDAO implements IHenDAO {
         String request = "SELECT * FROM Hen WHERE name = ?";
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(request)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHen) FROM Hen" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHen) FROM Hen");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);
@@ -156,7 +156,7 @@ public class HenDAO extends MySqlDAO implements IHenDAO {
     }
 
     public List<Hen> getAllFarmHen(int idFarm, MySQLConnectionPool connPool) throws SQLException {
-        String SQL_SELECT_HENS= "SELECT * FROM Hen WHERE Farm_idFarm = ?";
+        String SQL_SELECT_HENS = "SELECT * FROM Hen WHERE Farm_idFarm = ?";
         List<Hen> allHensByFarm = new ArrayList<>();
         Connection connection = null;
         try {

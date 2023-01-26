@@ -81,7 +81,7 @@ public class SheepDAO extends MySqlDAO implements ISheepDAO {
     }
 
     public List<Sheep> getAllFarmSheep(int idFarm, MySQLConnectionPool connPool) throws SQLException {
-        String SQL_SELECT_HENS= "SELECT * FROM Sheep WHERE Farm_idFarm = ?";
+        String SQL_SELECT_HENS = "SELECT * FROM Sheep WHERE Farm_idFarm = ?";
         List<Sheep> allSheepByFarm = new ArrayList<>();
         Connection connection = null;
         try {

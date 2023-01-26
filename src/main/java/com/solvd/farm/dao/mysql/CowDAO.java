@@ -45,7 +45,7 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
         int MAX_ID = 0;
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_COW)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);
@@ -97,7 +97,7 @@ public class CowDAO extends MySqlDAO implements ICowDAO {
         String request = "SELECT * FROM Cow WHERE name = ?";
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(request)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idCow) FROM Cow");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);

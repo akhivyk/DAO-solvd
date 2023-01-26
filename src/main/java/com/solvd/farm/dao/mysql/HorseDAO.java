@@ -27,7 +27,7 @@ public class HorseDAO extends MySqlDAO implements IHorseDAO {
         int MAX_ID = 0;
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_INSERT_HORSE)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHorse) FROM Horse" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHorse) FROM Horse");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);
@@ -49,7 +49,7 @@ public class HorseDAO extends MySqlDAO implements IHorseDAO {
         String request = "SELECT * FROM Horse WHERE name = ?";
         try (Connection connection = connPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(request)) {
-            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHorse) FROM Horse" );
+            PreparedStatement st = connection.prepareStatement("SELECT MAX(idHorse) FROM Horse");
             ResultSet idRS = st.executeQuery();
             if (idRS.next()) {
                 MAX_ID = idRS.getInt(1);

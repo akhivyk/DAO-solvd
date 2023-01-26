@@ -56,7 +56,7 @@ public class MyHandlerUser extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("car")) {
             isCar = true;
         } else if (qName.equalsIgnoreCase("computers")) {
-            SAXParserFactory factory=SAXParserFactory.newInstance();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
             MyHandlerComputer myHandlerComputer = new MyHandlerComputer();
             try {
                 SAXParser saxParser = factory.newSAXParser();
@@ -87,7 +87,7 @@ public class MyHandlerUser extends DefaultHandler {
         } else if (isDate) {
             isDate = false;
         } else if (isCar) {
-            SAXParserFactory factory=SAXParserFactory.newInstance();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
             MyHandlerCar myHandlerCar = new MyHandlerCar();
             try {
                 SAXParser saxParser = factory.newSAXParser();
