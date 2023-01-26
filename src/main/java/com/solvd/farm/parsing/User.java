@@ -1,4 +1,4 @@
-package com.solvd.farm.jaxb;
+package com.solvd.farm.parsing;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -9,13 +9,14 @@ import java.util.List;
 public class User {
     @XmlAttribute
     private long id;
-    @XmlAttribute
+    @XmlElement
     private String fname;
-    @XmlAttribute
+    @XmlElement
     private String lname;
     @XmlElement
     private int age;
     @XmlJavaTypeAdapter(DateAdapter.class)
+    @XmlAttribute(name = "date")
     private Date dof;
     @XmlElement(name = "car")
     private Car car;
@@ -96,13 +97,13 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", fname='" + fname + '\'' +
-                ", lname='" + lname + '\'' +
-                ", age=" + age +
-                ", dof=" + dof +
-                ", car=" + car +
-                ", computers=" + computers +
+                "\n id=" + id +
+                "\n fname='" + fname + '\'' +
+                "\n lname='" + lname + '\'' +
+                "\n age=" + age +
+                "\n dof=" + dof +
+                "\n car=" + car +
+                "\n computers=" + computers +
                 '}';
     }
 }

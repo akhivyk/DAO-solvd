@@ -1,4 +1,4 @@
-package com.solvd.farm.jaxb;
+package com.solvd.farm.parsing;
 
 import javax.xml.bind.annotation.*;
 
@@ -55,3 +55,4 @@ public class Car {
                 '}';
     }
 }
+
