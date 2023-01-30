@@ -1,15 +1,20 @@
 package com.solvd.farm.animals;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "animal")
 public abstract class Animal {
     @XmlAttribute
+    @JsonProperty("age")
     private int age;
     @XmlAttribute
+    @JsonProperty("name")
     private String name;
     @XmlAttribute
+    @JsonProperty("weight")
     private double weight;
 
     public Animal() {

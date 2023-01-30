@@ -1,5 +1,8 @@
 package com.solvd.farm.parsing;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
@@ -9,20 +12,28 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User {
     @XmlAttribute
+    @JsonProperty("id")
     private long id;
     @XmlElement
+    @JsonProperty("fname")
     private String fname;
     @XmlElement
+    @JsonProperty("lname")
     private String lname;
     @XmlElement
+    @JsonProperty("age")
     private int age;
     @XmlJavaTypeAdapter(DateAdapter.class)
     @XmlAttribute(name = "date")
+    @JsonProperty("dof")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private Date dof;
     @XmlElement(name = "car")
+    @JsonProperty("car")
     private Car car;
     @XmlElementWrapper(name = "computers")
     @XmlElement(name = "computer")
+    @JsonProperty("computers")
     private List<Computer> computers;
 
     public User() {

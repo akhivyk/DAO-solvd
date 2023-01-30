@@ -219,4 +219,24 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
             case 4 -> logger.info("Вы вернулись в главное меню.");
         }
     }
+
+    public CowDAO getCowDAO() {
+        return cowDAO;
+    }
+
+    public GoatDAO getGoatDAO() {
+        return goatDAO;
+    }
+
+    public HenDAO getHenDAO() {
+        return henDAO;
+    }
+
+    public HorseDAO getHorseDAO() {
+        return horseDAO;
+    }
+
+    public SheepDAO getSheepDAO() {
+        return sheepDAO;
+    }
 }

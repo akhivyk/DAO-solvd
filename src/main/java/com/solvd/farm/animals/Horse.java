@@ -1,7 +1,11 @@
 package com.solvd.farm.animals;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Horse extends Animal {
+    @JsonProperty("idHorse")
     private long idHorse;
+    @JsonProperty("idBelongsFarm")
     private int idBelongsFarm;
 
     public Horse() {

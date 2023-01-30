@@ -1,15 +1,20 @@
 package com.solvd.farm.parsing;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "car")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
     @XmlAttribute
+    @JsonProperty("carBrand")
     private String carBrand;
     @XmlElement
+    @JsonProperty("maxSpeed")
     private int maxSpeed;
     @XmlElement
+    @JsonProperty("countPlace")
     private int countPlace;
 
     public Car() {
