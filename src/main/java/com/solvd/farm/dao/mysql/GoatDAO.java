@@ -2,6 +2,9 @@ package com.solvd.farm.dao.mysql;
 
 import com.solvd.farm.animals.Goat;
 import com.solvd.farm.dao.IGoatDAO;
+import com.solvd.farm.dao.util.MyBatisDao;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoatDAO extends MySqlDAO implements IGoatDAO {
-    public static final String SQL_SELECT_ALL_GOATS = "SELECT * FROM Goat";
-    public static final String SQL_SELECT_GOAT_ID =
-            "SELECT * FROM Goat WHERE idGoat=?";
+    private static final SqlSessionFactory SESSION_FACTORY = MyBatisDao.getSqlSessionFactory();
     private static final Logger logger = LogManager.getLogger();
+    private final SqlSession sqlSession = SESSION_FACTORY.openSession();
+    private final IGoatDAO iGoatDAO = sqlSession.getMapper(IGoatDAO.class);
 
     @Override
     public Goat getEntityById(long id) {
@@ -37,73 +40,17 @@ public class GoatDAO extends MySqlDAO implements IGoatDAO {
 
     @Override
     public List<Goat> getAllGoats() {
-        List<Goat> allGoats = new ArrayList<>();
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_GOATS);
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                int age = rs.getInt(2);
-                String name = rs.getString(3);
-                double weight = rs.getDouble(4);
-                int idBelongsFarm = rs.getInt(5);
-                allGoats.add(new Goat(id, age, name, weight, idBelongsFarm));
-            }
-        } catch (SQLException e) {
-            logger.info(e.getMessage());
-        }
-        return allGoats;
+        return null;
     }
 
     @Override
     public Goat getGoatById(long idGoat) {
-        Goat goat = null;
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
-             PreparedStatement statement =
-                     connection.prepareStatement(SQL_SELECT_GOAT_ID)) {
-            statement.setInt(1, (int) idGoat);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                int id = rs.getInt(1);
-                int age = rs.getInt(2);
-                String name = rs.getString(3);
-                double weight = rs.getDouble(4);
-                int idBelongsFarm = rs.getInt(5);
-                goat = new Goat(id, age, name, weight, idBelongsFarm);
-            }
-        } catch (SQLException e) {
-            logger.info(e.getMessage());
-        }
-        return goat;
+        return null;
     }
 
-    public List<Goat> getAllFarmGoats(int idFarm, MySQLConnectionPool connPool) throws SQLException {
-        String SQL_SELECT_GOATS = "SELECT * FROM Goat WHERE Farm_idFarm = ?";
-        List<Goat> allGoatsByFarm = new ArrayList<>();
-        Connection connection = null;
-        try {
-            connection = connPool.getConnection();
-            try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_GOATS)) {
-                statement.setInt(1, idFarm);
-                ResultSet rs = statement.executeQuery();
-                while (rs.next()) {
-                    int id = rs.getInt(1);
-                    int age = rs.getInt(2);
-                    String name = rs.getString(3);
-                    double weight = rs.getDouble(4);
-                    int idBelongsFarm = rs.getInt(5);
-                    allGoatsByFarm.add(new Goat(id, age, name, weight, idBelongsFarm));
-                }
-            } catch (SQLException e) {
-                logger.info(e.getMessage());
-            }
-        } catch (SQLException e) {
-            logger.info(e.getMessage());
-        } finally {
-            connPool.returnConnection(connection);
-        }
-
-        return allGoatsByFarm;
+    @Override
+    public List<Goat> getAllFarmGoats(int idFarm) {
+        return iGoatDAO.getAllFarmGoats(idFarm);
     }
 
     @Override

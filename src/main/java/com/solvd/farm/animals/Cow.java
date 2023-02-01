@@ -18,6 +18,10 @@ public class Cow extends Animal {
         this.idBelongsFarm = idBelongsFarm;
     }
 
+    public Cow(int age, String name, double weight) {
+        super(age, name, weight);
+    }
+
     @Override
     public String toString() {
         return "Cow{" +

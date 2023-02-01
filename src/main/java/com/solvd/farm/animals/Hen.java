@@ -2,8 +2,6 @@ package com.solvd.farm.animals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class Hen extends Animal {
     @JsonProperty("idHen")
     private long idHen;
@@ -18,6 +16,10 @@ public class Hen extends Animal {
         super(age, name, weight);
         this.idHen = id;
         this.idBelongsFarm = idBelongsFarm;
+    }
+
+    public Hen(int age, String name, double weight) {
+        super(age, name, weight);
     }
 
     @Override

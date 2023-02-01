@@ -18,7 +18,10 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="db/mapper/user-mapper.xml"/>
-        <mapper resource="db/mapper/car-mapper.xml"/>
+        <mapper class="com.solvd.farm.dao.ICowDAO"/>
+        <mapper class="com.solvd.farm.dao.IHenDAO"/>
+        <mapper class="com.solvd.farm.dao.IGoatDAO"/>
+        <mapper class="com.solvd.farm.dao.IHorseDAO"/>
+        <mapper class="com.solvd.farm.dao.ISheepDAO"/>
     </mappers>
 </configuration>

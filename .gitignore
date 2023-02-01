@@ -22,3 +22,33 @@ pom.xml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+
+#ObjectMapper objectMapper = new ObjectMapper();
+#//                    List<T> array = objectMapper.readValue(new File("user.json"), Hen.class);
+#                    Car car = new Car("Opel", 220, 7);
+#                    Computer comp1 = new Computer("Lenovo", 8, 16.5);
+#                    Computer comp2 = new Computer("Apple", 16, 13.5);
+#                    List<Computer> computers = new ArrayList<>();
+#                    computers.add(comp1);
+#                    computers.add(comp2);
+#                    List<T> cows = new ArrayList<>();
+#                    List<Goat> goats = new ArrayList<>();
+#                    List<Hen> hens = new ArrayList<>();
+#                    List<Horse> horses = new ArrayList<>();
+#                    List<Sheep> sheep = new ArrayList<>();
+#                    FarmDAO farmDAO = new FarmDAO();
+#                    cows.add((T) farmDAO.getCowDAO().getCowById(1));
+#                    cows.add((T) farmDAO.getGoatDAO().getGoatById(2));
+#                    cows.add((T) farmDAO.getHenDAO().getHenById(1));
+#                    cows.add((T) farmDAO.getHorseDAO().getHorseById(1));
+#                    cows.add((T) farmDAO.getSheepDAO().getSheepById(1));
+#                    List<User> users = new ArrayList<>();
+#                    cows.add((T) new User(1, "Artem", "Khivyk", 23, new Date(22-11-2022), car, computers));
+#//                    jacksonParser.writeValue(users);
+#                    jacksonParser.writeValue(cows);
+#//                    jacksonParser.writeValue(goats);
+#//                    jacksonParser.writeValue(hens);
+#//                    jacksonParser.writeValue(horses);
+#//                    jacksonParser.writeValue(sheep);

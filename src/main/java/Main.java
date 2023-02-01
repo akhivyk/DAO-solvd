@@ -1,3 +1,4 @@
+import com.solvd.farm.animals.Cow;
 import com.solvd.farm.dao.mysql.FarmDAO;
 import com.solvd.farm.dao.mysql.MySQLConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -9,8 +10,7 @@ import java.util.Scanner;
 public class Main {
     private static final Logger logger = LogManager.getLogger();
 
-    public static void main(String[] args) throws SQLException {
-        MySQLConnectionPool connPool = new MySQLConnectionPool(10);
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int chooseAction = 0;
         FarmDAO farmDAO = new FarmDAO();
@@ -25,11 +25,11 @@ public class Main {
                     6 - Выход""");
             chooseAction = Integer.parseInt(in.nextLine());
             switch (chooseAction) {
-                case 1 -> farmDAO.getAllInformation(1, connPool);
-                case 2 -> farmDAO.createAnimal(in, connPool);
-                case 3 -> farmDAO.cloneAnimal(in, connPool);
-                case 4 -> farmDAO.updateAnimal(in, connPool);
-                case 5 -> farmDAO.removeAnimal(in, connPool);
+                case 1 -> farmDAO.getAllInformation(1);
+                case 2 -> farmDAO.createAnimal(in);
+                case 3 -> farmDAO.cloneAnimal(in);
+                case 4 -> farmDAO.updateAnimal(in);
+                case 5 -> farmDAO.removeAnimal(in);
                 case 6 -> {
                     logger.info("Bye - bye..");
                     chooseAction = 7;

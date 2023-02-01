@@ -1,9 +1,6 @@
 package com.solvd.farm.parsing;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solvd.farm.animals.*;
-import com.solvd.farm.dao.mysql.FarmDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -15,12 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class Parser {
