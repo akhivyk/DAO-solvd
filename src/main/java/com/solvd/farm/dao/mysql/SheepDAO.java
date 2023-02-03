@@ -6,8 +6,6 @@ import com.solvd.farm.dao.util.MyBatisDao;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SheepDAO extends MySqlDAO implements ISheepDAO {

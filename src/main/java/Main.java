@@ -1,10 +1,7 @@
-import com.solvd.farm.animals.Cow;
 import com.solvd.farm.dao.mysql.FarmDAO;
-import com.solvd.farm.dao.mysql.MySQLConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {

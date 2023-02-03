@@ -8,8 +8,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GoatDAO extends MySqlDAO implements IGoatDAO {
