@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class HorseDAO extends MySqlDAO implements IHorseDAO {
+public class HorseDAO extends DAO implements IHorseDAO {
 
     private static final SqlSessionFactory SESSION_FACTORY = MyBatisDao.getSqlSessionFactory();
     private final SqlSession sqlSession = SESSION_FACTORY.openSession();

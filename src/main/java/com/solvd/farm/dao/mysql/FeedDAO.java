@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedDAO extends MySqlDAO implements IFeedDAO {
+public class FeedDAO extends DAO implements IFeedDAO {
     public static final String SQL_SELECT_ALL_FEED = "SELECT * FROM Feed";
     public static final String SQL_SELECT_FEED_ID =
             "SELECT * FROM Feed WHERE idFeed=?";
@@ -38,7 +38,7 @@ public class FeedDAO extends MySqlDAO implements IFeedDAO {
     @Override
     public List<Feed> getAllFeeds() {
         List<Feed> allFeed = new ArrayList<>();
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_FEED);
             while (rs.next()) {
@@ -56,7 +56,7 @@ public class FeedDAO extends MySqlDAO implements IFeedDAO {
     @Override
     public Feed getFeedById(long idFeed) {
         Feed feed = null;
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(SQL_SELECT_FEED_ID)) {
             statement.setInt(1, (int) idFeed);

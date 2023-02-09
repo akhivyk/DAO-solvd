@@ -7,9 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class MySqlDAO {
+public class DAO {
     public static Connection getConnection() throws SQLException {
-        try (InputStream input = MySqlDAO.class.getClassLoader().getResourceAsStream("db.properties")) {
+        try (InputStream input = DAO.class.getClassLoader().getResourceAsStream("db.properties")) {
 
             Properties prop = new Properties();
 

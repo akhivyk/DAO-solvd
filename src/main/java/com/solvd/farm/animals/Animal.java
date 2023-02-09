@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "animal")
-public abstract class Animal {
+public class Animal {
     @XmlAttribute
     @JsonProperty("age")
     private int age;

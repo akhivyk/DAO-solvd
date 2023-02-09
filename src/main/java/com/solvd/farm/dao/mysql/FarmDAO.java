@@ -1,24 +1,28 @@
 package com.solvd.farm.dao.mysql;
 
 import com.solvd.farm.Farm;
+import com.solvd.farm.animals.Animal;
 import com.solvd.farm.animals.Cow;
 import com.solvd.farm.animals.Hen;
 import com.solvd.farm.animals.Horse;
+import com.solvd.farm.animals.util.AnimalFactory;
+import com.solvd.farm.animals.util.AnimalType;
 import com.solvd.farm.dao.IFarmDAO;
+import com.solvd.farm.dao.util.DAOFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class FarmDAO extends MySqlDAO implements IFarmDAO {
+public class FarmDAO extends DAO implements IFarmDAO {
 
     private static final Logger logger = LogManager.getLogger();
-    private final CowDAO cowDAO = new CowDAO();
-    private final GoatDAO goatDAO = new GoatDAO();
-    private final HenDAO henDAO = new HenDAO();
-    private final HorseDAO horseDAO = new HorseDAO();
-    private final SheepDAO sheepDAO = new SheepDAO();
+    private static DAOFactory daoFactory;
+
+    static {
+        daoFactory.createAllDAO();
+    }
 
     @Override
     public Farm getEntityById(long id) {
@@ -51,16 +55,23 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
     }
 
     public void getAllInformation(int idFarm) {
-        cowDAO.getAllFarmCows(idFarm).forEach(logger::info);
-        goatDAO.getAllFarmGoats(idFarm).forEach(logger::info);
-        henDAO.getAllFarmHens(idFarm).forEach(logger::info);
-        horseDAO.getAllFarmHorses(idFarm).forEach(logger::info);
-        sheepDAO.getAllFarmSheep(idFarm).forEach(logger::info);
+        daoFactory.getCowDAO().getAllFarmCows(idFarm).forEach(logger::info);
+        daoFactory.getGoatDAO().getAllFarmGoats(idFarm).forEach(logger::info);
+        daoFactory.getHenDAO().getAllFarmHens(idFarm).forEach(logger::info);
+        daoFactory.getHorseDAO().getAllFarmHorses(idFarm).forEach(logger::info);
+        daoFactory.getSheepDAO().getAllFarmSheep(idFarm).forEach(logger::info);
     }
 
     public void createAnimal(Scanner in) {
         logger.info("Выберите животное, которое хотите добавить на ферму:\n1 - Корова\n2 - Курица\n3 - Лошадь\n4 - Вернуться в меню");
         int chooseAnimal = Integer.parseInt(in.nextLine());
+        AnimalFactory animalFactory = new AnimalFactory();
+        Animal animal = null;
+        switch (chooseAnimal) {
+            case 1 -> animal = animalFactory.createEntityAnimal(AnimalType.COW);
+            case 2 -> animal = animalFactory.createEntityAnimal(AnimalType.HEN);
+            case 3 -> animal = animalFactory.createEntityAnimal(AnimalType.HORSE);
+        }
         switch (chooseAnimal) {
             case 1 -> {
                 logger.info("Введите возраст животного: ");
@@ -69,8 +80,10 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Введите вес животного: ");
                 double weight = Double.parseDouble(in.nextLine());
-                Cow c = new Cow(age, name, weight);
-                logger.info("Корова добавлена на ферму, id - " + cowDAO.createCow(c));
+                animal.setAge(age);
+                animal.setName(name);
+                animal.setWeight(weight);
+                logger.info("Корова добавлена на ферму, id - " + daoFactory.getCowDAO().createCow((Cow) animal));
             }
             case 2 -> {
                 logger.info("Введите возраст животного: ");
@@ -79,8 +92,10 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Введите вес животного: ");
                 double weight = Double.parseDouble(in.nextLine());
-                Hen h = new Hen(age, name, weight);
-                logger.info("Курица добавлена на ферму, id - " + henDAO.createHen(h));
+                animal.setAge(age);
+                animal.setName(name);
+                animal.setWeight(weight);
+                logger.info("Курица добавлена на ферму, id - " + daoFactory.getHenDAO().createHen((Hen) animal));
             }
             case 3 -> {
                 logger.info("Введите возраст животного: ");
@@ -89,8 +104,10 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Введите вес животного: ");
                 double weight = Double.parseDouble(in.nextLine());
-                Horse h = new Horse(age, name, weight);
-                logger.info("Лошадь добавлена на ферму, id - " + horseDAO.createHorse(h));
+                animal.setAge(age);
+                animal.setName(name);
+                animal.setWeight(weight);
+                logger.info("Лошадь добавлена на ферму, id - " + daoFactory.getHorseDAO().createHorse((Horse) animal));
             }
             case 4 -> logger.info("Вы вернулись в главное меню.");
         }
@@ -106,7 +123,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 logger.info("Введите новую кличку:");
                 String newName = in.nextLine();
                 logger.info("Корова клонирована, новая кличка - " + newName + ", id - " +
-                        "" + cowDAO.cloneCow(oldName, newName));
+                        "" + daoFactory.getCowDAO().cloneCow(oldName, newName));
             }
             case 2 -> {
                 logger.info("Введите кличку курицы, которую хотите клонировать:");
@@ -114,7 +131,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 logger.info("Введите новую кличку:");
                 String newName = in.nextLine();
                 logger.info("Лошадь клонирована, новая кличка - " + newName + ", id - " +
-                        "" + henDAO.cloneHen(oldName, newName));
+                        "" + daoFactory.getHenDAO().cloneHen(oldName, newName));
             }
             case 3 -> {
                 logger.info("Введите кличку лошади, которую хотите клонировать:");
@@ -122,7 +139,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 logger.info("Введите новую кличку:");
                 String newName = in.nextLine();
                 logger.info("Лошадь клонирована, новая кличка - " + newName + ", id - " +
-                        "" + horseDAO.cloneHorse(oldName, newName));
+                        "" + daoFactory.getHorseDAO().cloneHorse(oldName, newName));
             }
             case 4 -> logger.info("Вы вернулись в главное меню.");
         }
@@ -141,7 +158,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 double weight = Double.parseDouble(in.nextLine());
                 logger.info("Введите новый возраст животного:");
                 int age = Integer.parseInt(in.nextLine());
-                boolean b = cowDAO.updateCow(newName, weight, age, id);
+                boolean b = daoFactory.getCowDAO().updateCow(newName, weight, age, id);
                 if (b) {
                     logger.info("Информация успешно обновлена.");
                 }
@@ -155,7 +172,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 double weight = Double.parseDouble(in.nextLine());
                 logger.info("Введите новый возраст животного:");
                 int age = Integer.parseInt(in.nextLine());
-                boolean b = henDAO.updateHen(newName, weight, age, id);
+                boolean b = daoFactory.getHenDAO().updateHen(newName, weight, age, id);
                 if (b) {
                     logger.info("Информация успешно обновлена.");
                 }
@@ -169,7 +186,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 double weight = Double.parseDouble(in.nextLine());
                 logger.info("Введите новый возраст животного:");
                 int age = Integer.parseInt(in.nextLine());
-                boolean b = horseDAO.updateHorse(newName, weight, age, id);
+                boolean b = daoFactory.getHorseDAO().updateHorse(newName, weight, age, id);
                 if (b) {
                     logger.info("Информация успешно обновлена.");
                 }
@@ -187,7 +204,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Вы точно хотите удалить животное?\ny - да\nn - нет");
                 if (in.nextLine().equals("y")) {
-                    boolean b = cowDAO.removeCowName(name);
+                    boolean b = daoFactory.getCowDAO().removeCowName(name);
                     if (b) {
                         logger.info("Корова удалена.");
                     }
@@ -200,7 +217,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Вы точно хотите удалить животное?\ny - да\nn - нет");
                 if (in.nextLine().equals("y")) {
-                    boolean b = henDAO.removeHenName(name);
+                    boolean b = daoFactory.getHenDAO().removeHenName(name);
                     if (b) {
                         logger.info("Курица удалена.");
                     }
@@ -213,7 +230,7 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
                 String name = in.nextLine();
                 logger.info("Вы точно хотите удалить животное?\ny - да\nn - нет");
                 if (in.nextLine().equals("y")) {
-                    boolean b = horseDAO.removeHorseName(name);
+                    boolean b = daoFactory.getHorseDAO().removeHorseName(name);
                     if (b) {
                         logger.info("Лошадь удалена.");
                     }
@@ -223,25 +240,5 @@ public class FarmDAO extends MySqlDAO implements IFarmDAO {
             }
             case 4 -> logger.info("Вы вернулись в главное меню.");
         }
-    }
-
-    public CowDAO getCowDAO() {
-        return cowDAO;
-    }
-
-    public GoatDAO getGoatDAO() {
-        return goatDAO;
-    }
-
-    public HenDAO getHenDAO() {
-        return henDAO;
-    }
-
-    public HorseDAO getHorseDAO() {
-        return horseDAO;
-    }
-
-    public SheepDAO getSheepDAO() {
-        return sheepDAO;
     }
 }

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class GoatDAO extends MySqlDAO implements IGoatDAO {
+public class GoatDAO extends DAO implements IGoatDAO {
     private static final SqlSessionFactory SESSION_FACTORY = MyBatisDao.getSqlSessionFactory();
     private static final Logger logger = LogManager.getLogger();
     private final SqlSession sqlSession = SESSION_FACTORY.openSession();

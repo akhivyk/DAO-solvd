@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FarmerDAO extends MySqlDAO implements IFarmerDAO {
+public class FarmerDAO extends DAO implements IFarmerDAO {
     public static final String SQL_SELECT_ALL_FARMERS = "SELECT * FROM Farmer";
     public static final String SQL_SELECT_FARMER_ID =
             "SELECT * FROM Farmer WHERE idFarmer=?";
@@ -19,7 +19,7 @@ public class FarmerDAO extends MySqlDAO implements IFarmerDAO {
     @Override
     public List<Farmer> getAllFarmers() {
         List<Farmer> allFarmers = new ArrayList<>();
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_FARMERS);
             while (rs.next()) {
@@ -37,7 +37,7 @@ public class FarmerDAO extends MySqlDAO implements IFarmerDAO {
     @Override
     public Farmer getFarmerById(long idFarmer) {
         Farmer f = null;
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(SQL_SELECT_FARMER_ID)) {
             statement.setInt(1, (int) idFarmer);

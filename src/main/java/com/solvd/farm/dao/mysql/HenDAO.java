@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class HenDAO extends MySqlDAO implements IHenDAO {
+public class HenDAO extends DAO implements IHenDAO {
     private static final SqlSessionFactory SESSION_FACTORY = MyBatisDao.getSqlSessionFactory();
     private final SqlSession sqlSession = SESSION_FACTORY.openSession();
     private final IHenDAO iHenDAO = sqlSession.getMapper(IHenDAO.class);

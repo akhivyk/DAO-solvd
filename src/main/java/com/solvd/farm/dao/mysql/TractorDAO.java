@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TractorDAO extends MySqlDAO implements ITractorDAO {
+public class TractorDAO extends DAO implements ITractorDAO {
     public static final String SQL_SELECT_ALL_TRACTORS = "SELECT * FROM Tractor";
     public static final String SQL_SELECT_TRACTOR_ID =
             "SELECT * FROM Tractor WHERE idTractor=?";
@@ -38,7 +38,7 @@ public class TractorDAO extends MySqlDAO implements ITractorDAO {
     @Override
     public List<Tractor> getAllTractors() {
         List<Tractor> allTractors = new ArrayList<>();
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_TRACTORS);
             while (rs.next()) {
@@ -57,7 +57,7 @@ public class TractorDAO extends MySqlDAO implements ITractorDAO {
     @Override
     public Tractor getTractorById(long idTractor) {
         Tractor tractor = null;
-        try (Connection connection = (Connection) MySqlDAO.getConnection();
+        try (Connection connection = (Connection) DAO.getConnection();
              PreparedStatement statement =
                      connection.prepareStatement(SQL_SELECT_TRACTOR_ID)) {
             statement.setInt(1, (int) idTractor);

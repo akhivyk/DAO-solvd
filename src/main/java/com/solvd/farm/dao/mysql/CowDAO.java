@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class CowDAO extends MySqlDAO implements ICowDAO {
+public class CowDAO extends DAO implements ICowDAO {
     private static final SqlSessionFactory SESSION_FACTORY = MyBatisDao.getSqlSessionFactory();
     private final SqlSession sqlSession = SESSION_FACTORY.openSession();
     private final ICowDAO iCowDAO = sqlSession.getMapper(ICowDAO.class);
